@@ -2,6 +2,7 @@ const main = document.getElementById("main");
 const addUserBtn = document.getElementById("add-user");
 const doubleMoneyBtn = document.getElementById("double-money");
 const sortBtn = document.getElementById("sort");
+const showMillionairesBtn = document.getElementById("show-millionaires");
 
 let users = [];
 getRandomUser();
@@ -36,6 +37,13 @@ function sortByRichest() {
   updateDOM();
 }
 
+function showMillionaires() {
+  const millionairesUsers = users.filter(item => {
+    return item.money >= 1000000;
+  });
+  updateDOM(millionairesUsers);
+}
+
 function addData(obj) {
   users.push(obj);
 }
@@ -60,3 +68,4 @@ function formatCurrency(number) {
 addUserBtn.addEventListener("click", getRandomUser);
 doubleMoneyBtn.addEventListener("click", doubleMoney);
 sortBtn.addEventListener("click", sortByRichest);
+showMillionairesBtn.addEventListener("click", showMillionaires);
