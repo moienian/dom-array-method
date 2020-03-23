@@ -1,5 +1,6 @@
 const main = document.getElementById("main");
 const addUserBtn = document.getElementById("add-user");
+const doubleMoneyBtn = document.getElementById("double-money");
 
 let users = [];
 getRandomUser();
@@ -13,13 +14,21 @@ async function getRandomUser() {
 
   const newUser = {
     name: `${user.name.first} ${user.name.last}`,
-    money: formatCurrency(Math.floor(Math.random() * 1000000))
+    money: Math.floor(Math.random() * 1000000)
   };
 
   addData(newUser);
 
   updateDOM(users);
 }
+
+function doubleMoney() {
+  users = users.map(user => {
+    return { ...user, money: user.money * 2 };
+  });
+  updateDOM();
+}
+
 function addData(obj) {
   users.push(obj);
 }
@@ -30,7 +39,9 @@ function updateDOM(providedData = users) {
   providedData.forEach(item => {
     const element = document.createElement("div");
     element.classList.add("person");
-    element.innerHTML = `<strong>${item.name}</strong> ${item.money}`;
+    element.innerHTML = `<strong>${item.name}</strong> ${formatCurrency(
+      item.money
+    )}`;
     main.appendChild(element);
   });
 }
@@ -40,3 +51,4 @@ function formatCurrency(number) {
 }
 
 addUserBtn.addEventListener("click", getRandomUser);
+doubleMoneyBtn.addEventListener("click", doubleMoney);
