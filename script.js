@@ -1,6 +1,7 @@
 const main = document.getElementById("main");
 const addUserBtn = document.getElementById("add-user");
 const doubleMoneyBtn = document.getElementById("double-money");
+const sortBtn = document.getElementById("sort");
 
 let users = [];
 getRandomUser();
@@ -29,6 +30,12 @@ function doubleMoney() {
   updateDOM();
 }
 
+function sortByRichest() {
+  users.sort((a, b) => b.money - a.money);
+
+  updateDOM();
+}
+
 function addData(obj) {
   users.push(obj);
 }
@@ -52,3 +59,4 @@ function formatCurrency(number) {
 
 addUserBtn.addEventListener("click", getRandomUser);
 doubleMoneyBtn.addEventListener("click", doubleMoney);
+sortBtn.addEventListener("click", sortByRichest);
