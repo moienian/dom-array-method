@@ -1,24 +1,42 @@
 const main = document.getElementById("main");
+const addUserBtn = document.getElementById("add-user");
 
+let users = [];
 getRandomUser();
 getRandomUser();
 getRandomUser();
 
 async function getRandomUser() {
   const res = await fetch("https://randomuser.me/api");
-  const user = await res.json();
+  const data = await res.json();
+  const user = data.results[0];
 
-  const firstName = user.results[0].name.first;
-  const lastName = user.results[0].name.last;
+  const newUser = {
+    name: `${user.name.first} ${user.name.last}`,
+    money: formatCurrency(Math.floor(Math.random() * 1000000))
+  };
 
-  const element = document.createElement("div");
-  element.classList.add("person");
-  element.innerHTML = `<h3>${firstName} ${lastName}</h3> ${randomNumber()}`;
+  addData(newUser);
 
-  main.appendChild(element);
+  updateDOM(users);
+}
+function addData(obj) {
+  users.push(obj);
 }
 
-function randomNumber() {
-  const number = Math.floor(Math.random() * 1000000);
+function updateDOM(providedData = users) {
+  main.innerHTML = "<h2><strong>Person</strong>Wealth</h2>";
+
+  providedData.forEach(item => {
+    const element = document.createElement("div");
+    element.classList.add("person");
+    element.innerHTML = `<strong>${item.name}</strong> ${item.money}`;
+    main.appendChild(element);
+  });
+}
+
+function formatCurrency(number) {
   return "$" + number.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, "$&,");
 }
+
+addUserBtn.addEventListener("click", getRandomUser);

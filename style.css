@@ -43,6 +43,10 @@ button {
   font-size: 14px;
 }
 
+button:focus {
+  outline: none;
+}
+
 h2 {
   display: flex;
   justify-content: space-between;
